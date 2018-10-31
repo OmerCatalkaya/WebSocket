@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="html">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Web Socket</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- https://cdnjs.com/ -->
+
+    <script>
+
+        $(() => {
+
+            const socket = io.connect("http://localhost:3000/");
+
+            socket.on("merhabaDe", (data) => {
+                $("#merhaba").append("Merhaba <br>" + data.country);
+            });
+
+            $("button").on("click", () => {
+
+                socket.emit("selamVer", { city: "Bursa", name: "Mehmet" });
+            })
+        });
+
+
+    </script>
+
+</head>
+
+<body>
+
+    <h1>Merhaba ben "HTML" dosyasıyım...</h1>
+
+    <button>Selam Ver</button>
+    <div id="merhaba"></div>
+
+</body>
+
+</html>

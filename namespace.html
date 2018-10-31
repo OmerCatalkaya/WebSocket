@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="html">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Web Socket</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+
+        $(() => {
+
+            const socket = io.connect("http://localhost:3000/93creative");
+
+
+            $("button").on("click", () => {
+                socket.emit("isim yaz");
+            });
+
+            socket.on("Herkese gönder", (data) => {
+
+                $("body").append(`${ data.name } <br>`);
+
+            })
+
+
+        });
+
+
+    </script>
+
+</head>
+
+<body>
+
+
+    <button> Merhaba </button>
+
+</body>
+
+</html>
