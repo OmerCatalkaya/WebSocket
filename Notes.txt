@@ -1,0 +1,4 @@
+
+**************** Server ve Client arasında TCP bağlantısı kurulur.
+
+1>
