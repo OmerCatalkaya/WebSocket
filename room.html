@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="html">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Web Socket</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+
+        $(() => {
+
+            const socket = io.connect("http://localhost:3000/");
+
+            $("#joinRoom").on("click", () => {
+                socket.emit("joinRoom", { name: $("#roomName").val() });
+            });
+
+            $("#leaveRoom").on("click", () => {
+                socket.emit("leaveRoom", { name: $("#roomName").val() });
+            });
+
+            socket.on("new join", (data) => {
+                //$(".logs").append("<div>Odaya biri katıldı</div>");
+                $("#userCount").html(`Bu odada <b> ${data.count}</b> kişi var...`);
+            });
+
+            socket.on("leave room", (data) => {
+                $("#userCount").html(`Bu odada <b> ${data.count}</b> kişi var...`);
+            });
+
+            socket.on("log", (data) => {
+                $("#logs").append(data.message + "<br>");
+                $(`#roomName, #joinRoom`).attr("disabled", "disabled");
+                $(`#leaveRoom`).show();
+            });
+
+
+            socket.on("socket leaved", (data) => {
+                $("#logs").append(data.message + "<br>");
+                $(`#roomName, #joinRoom`).removeattr("disabled");
+                $(`#leaveRoom`).hide();
+                $(`#userCount`).empty();
+            });
+        });
+
+        
+    </script>
+
+    <style>
+
+        #leaveRoom{
+            display: none;
+        }
+
+</style>
+
+</head>
+
+<body>
+
+    <input type="text" id="roomName">
+
+    <button id="joinRoom"> Join </button>
+    <button id="leaveRoom"> Leave </button>
+
+    <!-- <div class="logs"></div> -->
+
+    <br><br>
+
+    <div id="logs"></div>
+
+    <br><br>
+
+    <div id="userCount"></div>
+
+</body>
+
+</html>
